@@ -1,0 +1,6 @@
+framework module Pods_demolqc {
+  umbrella header "Pods-demolqc-umbrella.h"
+
+  export *
+  module * { export * }
+}

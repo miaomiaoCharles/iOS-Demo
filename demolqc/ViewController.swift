@@ -7,130 +7,105 @@
 
 import UIKit
 import SnapKit
+
+protocol viewsProtocol {
+    var name: String { get set }
+}
+
 class ViewController: UIViewController {
-    lazy var button: UIButton = makeButton()
-    lazy var collectionView: UICollectionView = makeCollec()
-    lazy var scrollerView: UIScrollView = makeScroll()
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-    }
-    func setupUI() {
-        self.view.backgroundColor = UIColor.white
-        
-        self.view.addSubview(scrollerView)
-        scrollerView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview()
-        }
-        
-        scrollerView.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.height.width.equalTo(100)
-        }
-        
-        scrollerView.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
-            make.top.equalTo(button.snp.bottom).offset(5)
-            make.left.right.equalToSuperview().inset(5)
-            make.height.equalTo(100)
-            make.width.greaterThanOrEqualToSuperview()
-        }
-    }
-    func makeButton() -> UIButton{
-        let button = UIButton()
-        button.setTitle("button", for: .normal)
-        button.backgroundColor = UIColor.blue
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.red, for: .selected)
-        button.addTarget(self, action: #selector(buttonTouch), for: .touchDown)
-        return button
-    }
-    func makeCollec() -> UICollectionView {
-        let configurtion = UICollectionViewCompositionalLayoutConfiguration()
-        configurtion.scrollDirection = .horizontal
-        
-        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(40), heightDimension: .absolute(40)))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .estimated(40), heightDimension: .absolute(80)), repeatingSubitem: item, count: 2)
-        group.interItemSpacing = NSCollectionLayoutSpacing.fixed(5)
-        let section = NSCollectionLayoutSection(group: group)
-        section.interGroupSpacing = 10
-        let layout = UICollectionViewCompositionalLayout(section: section, configuration: configurtion)
-        let collecView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        collecView.register(Cell.self, forCellWithReuseIdentifier: Cell.reuseIdentifier)
-        
-        collecView.showsVerticalScrollIndicator = false
-        collecView.showsHorizontalScrollIndicator = false
-        collecView.bounces = false
-        collecView.backgroundColor = .clear
-        collecView.delegate = self
-        collecView.dataSource = self
-        
-        return collecView
-    }
-    func makeScroll() -> UIScrollView {
-        let scroller = UIScrollView(frame: self.view.frame)
-        scroller.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height * 2)
-        scroller.showsVerticalScrollIndicator =  false
-        scroller.showsHorizontalScrollIndicator = false
-        scroller.bounces = false
-        return scroller
-    }
-}
-
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 100
-    }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Cell.reuseIdentifier, for: indexPath) as? Cell else {
-            return UICollectionViewCell()
-        }
-        let index = indexPath.item
-        cell.cellConfig(index: index)
-        return cell
+    lazy var views = makeViews()
+    lazy var bottomTab = makeTab()
+    
+    lazy var viewModel = ViewModel()
+    
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        self.addObservers()
     }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-}
-
-class Cell: UICollectionViewCell {
-    static let reuseIdentifier: String = "\(Cell.self)"
-    let label = UILabel()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupUI()
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        self.addObservers()
+    }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        bottomTab.updateUI(name: "HomePage", isLeftAbandon: true, isRightAbandon: viewModel.currentPageIndex == views.count - 1)
     }
     func setupUI() {
-        self.addSubview(label)
-        self.backgroundColor = .green
-        label.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        self.view.addSubview(bottomTab)
+        bottomTab.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalTo(70)
+            make.bottom.equalToSuperview()
+        }
+        let view = views[viewModel.currentPageIndex]
+        self.view.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.bottom.equalTo(bottomTab.snp.top)
+            make.top.left.right.equalToSuperview()
         }
     }
-    func cellConfig(index: Int) {
-        label.text = String(index)
-        if index % 2 == 0 {
-            label.backgroundColor = .blue
-        } else {
-            label.backgroundColor = .green
+    func updateUI(view: UIView) {
+        view.snp.makeConstraints { make in
+            make.bottom.equalTo(bottomTab.snp.top)
+            make.top.left.right.equalToSuperview()
         }
+        guard let name = getCurrentViewName() else { return }
+        bottomTab.updateUI(name: name, isLeftAbandon: viewModel.currentPageIndex == 0, isRightAbandon: viewModel.currentPageIndex == views.count-1)
     }
 }
-
-
 
 extension ViewController {
-    @objc func buttonTouch(_sender: UIButton) {
-        print("kla")
+    func makeViews () -> [UIView] {
+        var views: [UIView] = [HomePage(), ShowView()]
+        return views
+    }
+    func makeTab() -> BottomTab {
+        let view: BottomTab = BottomTab()
+        view.delegate = self
+        return view
     }
 }
 
+extension ViewController {
+    func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(changePage(_:)), name: Notification.Name("currentPage"), object: nil)
+    }
+    @objc func changePage(_ notification: Notification) {
+        guard let oldViewIndex = notification.userInfo?[viewModel.currentPageIndex] as? Int else { return }
+        //执行翻页效果
+        let currentView = views[viewModel.currentPageIndex]
+        UIView.transition(from: views[oldViewIndex], to: currentView, duration: 0.3, options: .transitionFlipFromBottom)
+        UIView.animate(withDuration: <#T##TimeInterval#>, animations: <#T##() -> Void#>)
+        updateUI(view: currentView)
+    }
+}
+
+extension ViewController: BottomTabDelegate {
+    func clickRight() {
+        if viewModel.currentPageIndex != views.count - 1 {
+            viewModel.currentPageIndex += 1
+        }
+    }
+    
+    func clickLeft() {
+        if viewModel.currentPageIndex != 0 {
+            viewModel.currentPageIndex -= 1
+        }
+    }
+}
+
+extension ViewController {
+    func getCurrentViewName() -> String? {
+        guard let view = views[viewModel.currentPageIndex] as? viewsProtocol else { return nil }
+        return view.name
+    }
+}

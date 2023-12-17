@@ -8,16 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		0E78F8D71E46BCA75C3577B3 /* Pods_demolqc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DF206F7E5004B36DFE7A807 /* Pods_demolqc.framework */; };
+		2B506E922B2DD24700A39C99 /* BottomTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B506E912B2DD24700A39C99 /* BottomTab.swift */; };
+		2B5073DC2B2F1ABC00A39C99 /* HomePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5073DB2B2F1ABC00A39C99 /* HomePage.swift */; };
+		2B6DE95F2B2B20130085079E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6DE95E2B2B20130085079E /* ViewModel.swift */; };
 		2BABE9732B14DB4000A6C21A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BABE9722B14DB4000A6C21A /* AppDelegate.swift */; };
 		2BABE9752B14DB4000A6C21A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BABE9742B14DB4000A6C21A /* SceneDelegate.swift */; };
 		2BABE9772B14DB4000A6C21A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BABE9762B14DB4000A6C21A /* ViewController.swift */; };
 		2BABE97A2B14DB4000A6C21A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BABE9782B14DB4000A6C21A /* Main.storyboard */; };
 		2BABE97C2B14DB4100A6C21A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BABE97B2B14DB4100A6C21A /* Assets.xcassets */; };
 		2BABE97F2B14DB4100A6C21A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2BABE97D2B14DB4100A6C21A /* LaunchScreen.storyboard */; };
-		2BD9C94E2B25D3DD00FAA188 /* table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD9C94D2B25D3DD00FAA188 /* table.swift */; };
+		2BD9C94E2B25D3DD00FAA188 /* ShowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD9C94D2B25D3DD00FAA188 /* ShowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B506E912B2DD24700A39C99 /* BottomTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomTab.swift; sourceTree = "<group>"; };
+		2B5073DB2B2F1ABC00A39C99 /* HomePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePage.swift; sourceTree = "<group>"; };
+		2B6DE95E2B2B20130085079E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		2BABE96F2B14DB4000A6C21A /* demolqc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demolqc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BABE9722B14DB4000A6C21A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2BABE9742B14DB4000A6C21A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,7 +32,7 @@
 		2BABE97B2B14DB4100A6C21A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BABE97E2B14DB4100A6C21A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2BABE9802B14DB4100A6C21A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2BD9C94D2B25D3DD00FAA188 /* table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = table.swift; sourceTree = "<group>"; };
+		2BD9C94D2B25D3DD00FAA188 /* ShowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowView.swift; sourceTree = "<group>"; };
 		3DF206F7E5004B36DFE7A807 /* Pods_demolqc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_demolqc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C428A2CA68057184D74DB57B /* Pods-demolqc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demolqc.debug.xcconfig"; path = "Target Support Files/Pods-demolqc/Pods-demolqc.debug.xcconfig"; sourceTree = "<group>"; };
 		CFDE1025BC9C7EBB48D3CB31 /* Pods-demolqc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-demolqc.release.xcconfig"; path = "Target Support Files/Pods-demolqc/Pods-demolqc.release.xcconfig"; sourceTree = "<group>"; };
@@ -52,6 +58,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2B5073DA2B2F1A7900A39C99 /* demoViews */ = {
+			isa = PBXGroup;
+			children = (
+				2B5073DB2B2F1ABC00A39C99 /* HomePage.swift */,
+				2BD9C94D2B25D3DD00FAA188 /* ShowView.swift */,
+			);
+			path = demoViews;
+			sourceTree = "<group>";
+		};
 		2BABE9662B14DB4000A6C21A = {
 			isa = PBXGroup;
 			children = (
@@ -73,14 +88,16 @@
 		2BABE9712B14DB4000A6C21A /* demolqc */ = {
 			isa = PBXGroup;
 			children = (
+				2B5073DA2B2F1A7900A39C99 /* demoViews */,
 				2BABE9722B14DB4000A6C21A /* AppDelegate.swift */,
 				2BABE9742B14DB4000A6C21A /* SceneDelegate.swift */,
 				2BABE9762B14DB4000A6C21A /* ViewController.swift */,
-				2BD9C94D2B25D3DD00FAA188 /* table.swift */,
 				2BABE9782B14DB4000A6C21A /* Main.storyboard */,
 				2BABE97B2B14DB4100A6C21A /* Assets.xcassets */,
 				2BABE97D2B14DB4100A6C21A /* LaunchScreen.storyboard */,
 				2BABE9802B14DB4100A6C21A /* Info.plist */,
+				2B6DE95E2B2B20130085079E /* ViewModel.swift */,
+				2B506E912B2DD24700A39C99 /* BottomTab.swift */,
 			);
 			path = demolqc;
 			sourceTree = "<group>";
@@ -211,7 +228,10 @@
 			files = (
 				2BABE9772B14DB4000A6C21A /* ViewController.swift in Sources */,
 				2BABE9732B14DB4000A6C21A /* AppDelegate.swift in Sources */,
-				2BD9C94E2B25D3DD00FAA188 /* table.swift in Sources */,
+				2B506E922B2DD24700A39C99 /* BottomTab.swift in Sources */,
+				2BD9C94E2B25D3DD00FAA188 /* ShowView.swift in Sources */,
+				2B6DE95F2B2B20130085079E /* ViewModel.swift in Sources */,
+				2B5073DC2B2F1ABC00A39C99 /* HomePage.swift in Sources */,
 				2BABE9752B14DB4000A6C21A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
